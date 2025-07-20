@@ -1,10 +1,13 @@
-const { ethers } = require("hardhat");
+const { ethers, network } = require("hardhat");
+const fs = require("fs");
+const path = require("path");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Deploying contracts with the account:", deployer.address);
+  console.log("Deploying on network:", network.name);
 
-  // Deploy Mock USDT Token
+  // Deploy MockUSDT
   const MockUSDT = await ethers.getContractFactory("MockUSDT");
   const mockUSDT = await MockUSDT.deploy(
     "Mock USDT", // Name
@@ -12,41 +15,66 @@ async function main() {
     18, // Decimals
     1000000000000 // Initial supply (1 billion tokens)
   );
-
   await mockUSDT.deployed();
-  console.log("MockUSDT deployed to:", mockUSDT.address);
+  console.log(`MockUSDT deployed to: ${mockUSDT.address}`);
 
-  // Calculate token amount for faucet distribution (1000 tokens per request)
-  const tokenAmount = ethers.utils.parseUnits("1000", 18);
-
-  // Deploy Faucet contract
+  // Deploy TokenFaucet
   const TokenFaucet = await ethers.getContractFactory("TokenFaucet");
-  const faucet = await TokenFaucet.deploy(
-    mockUSDT.address, // Token address
-    tokenAmount // Amount per request
+  const tokenFaucet = await TokenFaucet.deploy(
+    mockUSDT.address,
+    ethers.utils.parseUnits("1000", 18)
   );
+  await tokenFaucet.deployed();
+  console.log(`TokenFaucet deployed to: ${tokenFaucet.address}`);
 
-  await faucet.deployed();
-  console.log("TokenFaucet deployed to:", faucet.address);
+  // --- Save contract addresses ---
+  const addresses = {
+    tokenAddress: mockUSDT.address,
+    faucetAddress: tokenFaucet.address,
+  };
+  saveContractAddresses(addresses);
 
-  // Transfer tokens to the faucet (1000000000)
-  const faucetAmount = ethers.utils.parseUnits("1000000000", 18);
-  await mockUSDT.transfer(faucet.address, faucetAmount);
+  // --- Fund the faucet contract ---
+  console.log("\nFunding the faucet contract...");
+  const amount = ethers.utils.parseUnits("1000000000", 18); // 1 billion tokens
+  const tx = await mockUSDT.transfer(tokenFaucet.address, amount);
+  await tx.wait();
   console.log(
     `Transferred ${ethers.utils.formatUnits(
-      faucetAmount,
+      amount,
       18
-    )} tokens to the faucet`
+    )} mUSDT to the faucet at ${tokenFaucet.address}`
+  );
+
+  console.log("\nDeployment complete!");
+}
+
+function saveContractAddresses(newAddresses) {
+  const addressesDir = path.join(__dirname, "..");
+  const addressesPath = path.join(addressesDir, "addresses.json");
+
+  let existingAddresses = {};
+  if (fs.existsSync(addressesPath)) {
+    try {
+      existingAddresses = JSON.parse(fs.readFileSync(addressesPath, "utf8"));
+    } catch (e) {
+      console.error("Error parsing existing addresses.json, starting fresh.");
+    }
+  }
+
+  // Add or update the addresses for the current network
+  existingAddresses[network.name] = newAddresses;
+
+  fs.writeFileSync(
+    addressesPath,
+    JSON.stringify(existingAddresses, null, 2) // Pretty print JSON
   );
 
   console.log(
-    "\nDeployment complete! Update the following in your chains.js file:"
+    `\nContract addresses saved for network '${network.name}' to: ${addressesPath}`
   );
-  console.log(`faucetAddress: "${faucet.address}"`);
-  console.log(`tokenAddress: "${mockUSDT.address}"`);
 }
 
-// Execute the deployment
 main()
   .then(() => process.exit(0))
   .catch((error) => {
