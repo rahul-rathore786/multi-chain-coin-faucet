@@ -74,37 +74,6 @@ function App() {
                   </a>
                 </p>
               )}
-              {result.status === "success" && result.tokenInfo && (
-                <div>
-                  <button
-                    className="btn btn-add-token"
-                    onClick={async () => {
-                      try {
-                        await window.ethereum.request({
-                          method: "wallet_watchAsset",
-                          params: {
-                            type: "ERC20",
-                            options: {
-                              address: result.tokenInfo.tokenAddress,
-                              symbol: result.tokenInfo.tokenSymbol,
-                              decimals: result.tokenInfo.tokenDecimals,
-                              image: result.tokenInfo.tokenImage || "",
-                            },
-                          },
-                        });
-                      } catch (error) {
-                        console.error("Error adding token to MetaMask", error);
-                        setResult({
-                          ...result,
-                          message: `${result.message}\nError adding token to MetaMask: ${error.message}`,
-                        });
-                      }
-                    }}
-                  >
-                    Add Token to MetaMask
-                  </button>
-                </div>
-              )}
             </div>
           </div>
         )}
