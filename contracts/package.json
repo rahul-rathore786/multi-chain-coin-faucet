@@ -10,6 +10,7 @@
     "deploy:mumbai": "hardhat run deployment.js --network mumbai",
     "deploy:bscTestnet": "hardhat run deployment.js --network bscTestnet",
     "deploy:arbitrumGoerli": "hardhat run deployment.js --network arbitrumGoerli",
+    "deploy:hyperion": "hardhat run deployment.js --network hyperion",
     "verify:sepolia": "hardhat verify --network sepolia"
   },
   "keywords": [

@@ -41,6 +41,13 @@ module.exports = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 421613,
     },
+    hyperion: {
+      url:
+        process.env.HYPERION_RPC_URL ||
+        "https://hyperion-testnet.metisdevops.link",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: 133717,
+    },
   },
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
@@ -48,6 +55,6 @@ module.exports = {
   // source files and artifacts
   paths: {
     sources: "./contracts",
-    artifacts: "./artifacts-sepolia",
+    artifacts: "./artifacts-metis",
   },
 };
