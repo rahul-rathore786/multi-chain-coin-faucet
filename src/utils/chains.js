@@ -3,6 +3,7 @@ export const SUPPORTED_CHAINS = {
   sepolia: {
     name: "Sepolia (ETH Testnet)",
     chainId: 11155111,
+    nativeCurrency: "ETH",
     // Using Infura endpoint with API key to avoid CORS issues
     // You should replace 'YOUR_INFURA_API_KEY' with an actual API key from https://infura.io
     // Free tier is available
@@ -31,6 +32,8 @@ export const SUPPORTED_CHAINS = {
   bnb_testnet: {
     name: "BSC Testnet",
     chainId: 97,
+    nativeCurrency: "BNB",
+    publicRpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
     rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
     faucetAddress: "0xYourBSCFaucetAddress", // Replace with actual faucet contract address
     tokenAddress: "0xYourBSCTokenAddress", // Replace with actual token address
@@ -53,6 +56,7 @@ export const SUPPORTED_CHAINS = {
   hyperion: {
     name: "Hyperion",
     chainId: 133717,
+    nativeCurrency: "MET",
     publicRpcUrl: "https://hyperion-testnet.metisdevops.link",
     rpcUrl: "https://hyperion-testnet.metisdevops.link",
     faucetAddress: "0xe6219F53844B8aD16720663bE1d8724D329f45F3", // Replace with actual faucet contract address
