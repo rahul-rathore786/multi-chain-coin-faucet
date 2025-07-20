@@ -6,7 +6,7 @@ import TokenFaucet from "../abis/TokenFaucet.json";
 import "./FaucetForm.css";
 // require("dotenv").config();
 
-const FaucetForm = ({ setResult }) => {
+const FaucetForm = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [selectedChain, setSelectedChain] = useState("sepolia");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +14,13 @@ const FaucetForm = ({ setResult }) => {
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+
+  const [txResult, setTxResult] = useState({
+    status: "",
+    message: "",
+    txHash: "",
+    tokenInfo: null,
+  });
 
   const validateAddress = (address) => {
     try {
@@ -288,45 +295,47 @@ const FaucetForm = ({ setResult }) => {
       // Call the sendTo function
       console.log("Sending tokens to:", walletAddress);
       const tx = await faucetContract.sendTo(walletAddress);
-      console.log("Transaction sent, hash:", tx.hash);
 
-      await tx.wait();
-      console.log("Transaction confirmed");
+await tx.wait();
+console.log("Transaction confirmed");
 
-      // Mark as claimed in local storage
-      recordClaim(walletAddress, selectedChain, tx.hash);
-      setHasClaimed(true);
+// Mark address as claimed for this chain
+markAddressAsClaimed(walletAddress, selectedChain);
+setHasClaimed(true);
 
-      // Show success message with transaction hash
-      setResult({
-        status: "success",
-        message: `Successfully sent 1000 ${chainConfig.tokenSymbol} tokens to ${walletAddress}`,
-        txHash: tx.hash,
-        tokenInfo: chainConfig,
-      });
-    } catch (error) {
-      console.error("Error sending tokens:", error);
+// Success
+setTxResult({
+status: "success",
+message: `Successfully sent 1000 ${chainConfig.tokenSymbol} tokens to your address.`,
+txHash: tx.hash,
+tokenInfo: {
+...chainConfig,
+},
+});
+} catch (error) {
+console.error("Error sending tokens:", error);
 
-      // More user-friendly error message based on error type
-      let errorMessage = error.message;
+// More user-friendly error message based on error type
+let errorMessage = error.message;
 
-      if (errorMessage.includes("noNetwork") || errorMessage.includes("CORS")) {
-        errorMessage =
-          "Network connection error. This is likely due to CORS restrictions in your browser. We've updated to use Infura, please refresh the page and try again.";
-      } else if (errorMessage.includes("insufficient funds")) {
-        errorMessage =
-          "The faucet contract doesn't have enough funds to complete this transaction. Please contact the administrator.";
-      }
+if (errorMessage.includes("noNetwork") || errorMessage.includes("CORS")) {
+errorMessage =
+"Network connection error. This is likely due to CORS restrictions in your browser. We've updated to use Infura, please refresh the page and try again.";
+} else if (errorMessage.includes("insufficient funds")) {
+errorMessage =
+"The faucet contract doesn't have enough funds to complete this transaction. Please contact the administrator.";
+}
 
-      setResult({
-        status: "error",
-        message: `Failed to send tokens: ${errorMessage}`,
-        txHash: "",
-        tokenInfo: null,
-      });
-    } finally {
-      setIsLoading(false);
-    }
+setTxResult({
+status: "error",
+message: `Failed to send tokens: ${errorMessage}`,
+txHash: null,
+tokenInfo: null,
+});
+} finally {
+setIsLoading(false);
+}
+};
   };
 
   // Function to add token to MetaMask
@@ -486,6 +495,39 @@ const FaucetForm = ({ setResult }) => {
                 SUPPORTED_CHAINS[selectedChain]?.tokenSymbol || ""
               } Tokens`}
         </button>
+        {txResult.status && (
+          <div
+            className={`result-box ${
+              txResult.status === "success" ? "result-success" : "result-error"
+            }`}
+          >
+            <div className="result-icon">
+              {txResult.status === "success" ? "✅" : "❌"}
+            </div>
+            <div className="result-content">
+              <h3>
+                {txResult.status === "success"
+                  ? "Transaction Successful!"
+                  : "Transaction Failed"}
+              </h3>
+              <p>{txResult.message}</p>
+              {txResult.txHash && (
+                <p className="tx-hash">
+                  Transaction Hash:{" "}
+                  <a
+                    href={`${txResult.tokenInfo?.explorer}/tx/${txResult.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {txResult.txHash.substring(0, 8)}...
+                    {txResult.txHash.substring(txResult.txHash.length - 8)}
+                    <span className="external-link">↗</span>
+                  </a>
+                </p>
+              )}
+            </div>
+          </div>
+        )}
         {isConnected && (
           <div className="contract-balance-container">
             <h4>Faucet Balance</h4>
