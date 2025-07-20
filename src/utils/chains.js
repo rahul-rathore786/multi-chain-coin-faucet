@@ -48,4 +48,16 @@ export const SUPPORTED_CHAINS = {
     explorer: "https://goerli.arbiscan.io",
     tokenImage: "",
   },
+  hyperion: {
+    name: "Hyperion",
+    chainId: 133717,
+    rpcUrl: "https://hyperion-testnet.metisdevops.link",
+    faucetAddress: "0xYourHyperionFaucetAddress", // Replace with actual faucet contract address
+    tokenAddress: "0xYourHyperionTokenAddress", // Replace with actual token address
+    tokenSymbol: "mUSDT",
+    tokenDecimals: 18,
+    explorer: "https://hyperion-testnet.metisdevops.link",
+    tokenImage:
+      "https://assets.coingecko.com/coins/images/35001/standard/logo.png?1706959346",
+  },
 };
