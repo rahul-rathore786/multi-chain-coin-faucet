@@ -1,4 +1,6 @@
 .faucet-form-container {
+  word-wrap: break-word;
+
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -14,6 +16,16 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.faucet-form select {
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5z%22%20fill%3D%22%23aaa%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1.2em;
+  padding-right: 2.5rem; /* Make space for the arrow */
 }
 
 .form-group {
@@ -219,8 +231,22 @@ button:disabled {
 }
 
 .address-value {
+  font-size: 1.1rem;
   font-family: monospace;
   font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .faucet-form-container {
+    padding: 1rem;
+  }
+
+  .result-content p,
+  .token-info p {
+    overflow-wrap: break-word;
+    word-break: break-all;
+  }
 }
 
 .network-info {

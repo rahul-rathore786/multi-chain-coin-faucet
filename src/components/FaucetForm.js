@@ -500,9 +500,6 @@ const FaucetForm = () => {
               result.status === "success" ? "result-success" : "result-error"
             }`}
           >
-            <div className="result-icon">
-              {result.status === "success" ? "✅" : "❌"}
-            </div>
             <div className="result-content">
               <h3>
                 {result.status === "success"
