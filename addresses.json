@@ -1,0 +1,10 @@
+{
+  "hyperion": {
+    "tokenAddress": "0x5c7FbBF922643eaea24F4Cf7FD2F220e70659Ce7",
+    "faucetAddress": "0xe6219F53844B8aD16720663bE1d8724D329f45F3"
+  },
+  "sepolia": {
+    "tokenAddress": "0xf7d57A3105030D3A9A525a169DCBE05a92Eeb382",
+    "faucetAddress": "0x0DDE3Ef02DACAB3ce033095156a28c777622D85b"
+  }
+}
