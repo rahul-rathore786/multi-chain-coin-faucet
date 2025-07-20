@@ -15,17 +15,17 @@ export const SUPPORTED_CHAINS = {
     tokenImage: "https://cryptologos.cc/logos/tether-usdt-logo.png",
   },
   // More chains can be added here as needed
-  polygon_mumbai: {
-    name: "Mumbai (Polygon Testnet)",
-    chainId: 80001,
-    rpcUrl: "https://rpc-mumbai.maticvigil.com",
-    faucetAddress: "0xYourMumbaiFaucetAddress", // Replace with actual faucet contract address
-    tokenAddress: "0xYourMumbaiTokenAddress", // Replace with actual token address
-    tokenSymbol: "TESTTKN",
-    tokenDecimals: 18,
-    explorer: "https://mumbai.polygonscan.com",
-    tokenImage: "",
-  },
+  // polygon_mumbai: {
+  //   name: "Mumbai (Polygon Testnet)",
+  //   chainId: 80001,
+  //   rpcUrl: "https://rpc-mumbai.maticvigil.com",
+  //   faucetAddress: "0xYourMumbaiFaucetAddress", // Replace with actual faucet contract address
+  //   tokenAddress: "0xYourMumbaiTokenAddress", // Replace with actual token address
+  //   tokenSymbol: "TESTTKN",
+  //   tokenDecimals: 18,
+  //   explorer: "https://mumbai.polygonscan.com",
+  //   tokenImage: "",
+  // },
   bnb_testnet: {
     name: "BSC Testnet",
     chainId: 97,
@@ -37,23 +37,23 @@ export const SUPPORTED_CHAINS = {
     explorer: "https://testnet.bscscan.com",
     tokenImage: "",
   },
-  arbitrum_goerli: {
-    name: "Arbitrum Goerli",
-    chainId: 421613,
-    rpcUrl: "https://goerli-rollup.arbitrum.io/rpc",
-    faucetAddress: "0xYourArbitrumFaucetAddress", // Replace with actual faucet contract address
-    tokenAddress: "0xYourArbitrumTokenAddress", // Replace with actual token address
-    tokenSymbol: "ARBTKN",
-    tokenDecimals: 18,
-    explorer: "https://goerli.arbiscan.io",
-    tokenImage: "",
-  },
+  // arbitrum_goerli: {
+  //   name: "Arbitrum Goerli",
+  //   chainId: 421613,
+  //   rpcUrl: "https://goerli-rollup.arbitrum.io/rpc",
+  //   faucetAddress: "0xYourArbitrumFaucetAddress", // Replace with actual faucet contract address
+  //   tokenAddress: "0xYourArbitrumTokenAddress", // Replace with actual token address
+  //   tokenSymbol: "ARBTKN",
+  //   tokenDecimals: 18,
+  //   explorer: "https://goerli.arbiscan.io",
+  //   tokenImage: "",
+  // },
   hyperion: {
     name: "Hyperion",
     chainId: 133717,
     rpcUrl: "https://hyperion-testnet.metisdevops.link",
-    faucetAddress: "0xYourHyperionFaucetAddress", // Replace with actual faucet contract address
-    tokenAddress: "0xYourHyperionTokenAddress", // Replace with actual token address
+    faucetAddress: "0xe6219F53844B8aD16720663bE1d8724D329f45F3", // Replace with actual faucet contract address
+    tokenAddress: "0x5c7FbBF922643eaea24F4Cf7FD2F220e70659Ce7", // Replace with actual token address
     tokenSymbol: "mUSDT",
     tokenDecimals: 18,
     explorer: "https://hyperion-testnet.metisdevops.link",
