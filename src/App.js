@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import FaucetForm from './components/FaucetForm';
-import { SUPPORTED_CHAINS } from './utils/chains';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import FaucetForm from "./components/FaucetForm";
+import { SUPPORTED_CHAINS } from "./utils/chains";
 
 function App() {
-
-  const [result, setResult] = useState({ status: '', message: '', txHash: '', tokenInfo: null });
+  const [result, setResult] = useState({
+    status: "",
+    message: "",
+    txHash: "",
+    tokenInfo: null,
+  });
   const [activeNetworks, setActiveNetworks] = useState(0);
 
   // Count active networks
@@ -39,48 +43,57 @@ function App() {
 
       <main className="App-main">
         <FaucetForm setResult={setResult} />
-        
+
         {result.status && (
-          <div className={`result-box ${result.status === 'success' ? 'result-success' : 'result-error'}`}>
+          <div
+            className={`result-box ${
+              result.status === "success" ? "result-success" : "result-error"
+            }`}
+          >
             <div className="result-icon">
-              {result.status === 'success' ? '✅' : '❌'}
+              {result.status === "success" ? "✅" : "❌"}
             </div>
             <div className="result-content">
-              <h3>{result.status === 'success' ? 'Transaction Successful!' : 'Transaction Failed'}</h3>
+              <h3>
+                {result.status === "success"
+                  ? "Transaction Successful!"
+                  : "Transaction Failed"}
+              </h3>
               <p>{result.message}</p>
               {result.txHash && (
                 <p className="tx-hash">
-                  Transaction Hash:{' '}
-                  <a 
+                  Transaction Hash:{" "}
+                  <a
                     href={`${result.tokenInfo?.explorer}/tx/${result.txHash}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {result.txHash.substring(0, 8)}...{result.txHash.substring(result.txHash.length - 8)}
+                    {result.txHash.substring(0, 8)}...
+                    {result.txHash.substring(result.txHash.length - 8)}
                     <span className="external-link">↗</span>
                   </a>
                 </p>
               )}
-              {result.status === 'success' && result.tokenInfo && (
+              {result.status === "success" && result.tokenInfo && (
                 <div>
-                  <button 
-                    className="btn btn-add-token" 
+                  <button
+                    className="btn btn-add-token"
                     onClick={async () => {
                       try {
                         await window.ethereum.request({
-                          method: 'wallet_watchAsset',
+                          method: "wallet_watchAsset",
                           params: {
-                            type: 'ERC20',
+                            type: "ERC20",
                             options: {
                               address: result.tokenInfo.tokenAddress,
                               symbol: result.tokenInfo.tokenSymbol,
                               decimals: result.tokenInfo.tokenDecimals,
-                              image: result.tokenInfo.tokenImage || '',
+                              image: result.tokenInfo.tokenImage || "",
                             },
                           },
                         });
                       } catch (error) {
-                        console.error('Error adding token to MetaMask', error);
+                        console.error("Error adding token to MetaMask", error);
                         setResult({
                           ...result,
                           message: `${result.message}\nError adding token to MetaMask: ${error.message}`,
@@ -97,7 +110,12 @@ function App() {
         )}
       </main>
       <footer className="App-footer">
-        <p>Supported Networks: {Object.values(SUPPORTED_CHAINS).map(chain => chain.name).join(', ')}</p>
+        <p>
+          Supported Networks:{" "}
+          {Object.values(SUPPORTED_CHAINS)
+            .map((chain) => chain.name)
+            .join(", ")}
+        </p>
         <p>&copy; {new Date().getFullYear()} Multi-Chain ERC-20 Faucet</p>
       </footer>
     </div>
