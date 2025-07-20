@@ -4,12 +4,6 @@ import FaucetForm from "./components/FaucetForm";
 import { SUPPORTED_CHAINS } from "./utils/chains";
 
 function App() {
-  const [result, setResult] = useState({
-    status: "",
-    message: "",
-    txHash: "",
-    tokenInfo: null,
-  });
   const [activeNetworks, setActiveNetworks] = useState(0);
 
   // Count active networks
@@ -42,41 +36,7 @@ function App() {
       </header>
 
       <main className="App-main">
-        <FaucetForm setResult={setResult} />
-
-        {result.status && (
-          <div
-            className={`result-box ${
-              result.status === "success" ? "result-success" : "result-error"
-            }`}
-          >
-            <div className="result-icon">
-              {result.status === "success" ? "✅" : "❌"}
-            </div>
-            <div className="result-content">
-              <h3>
-                {result.status === "success"
-                  ? "Transaction Successful!"
-                  : "Transaction Failed"}
-              </h3>
-              <p>{result.message}</p>
-              {result.txHash && (
-                <p className="tx-hash">
-                  Transaction Hash:{" "}
-                  <a
-                    href={`${result.tokenInfo?.explorer}/tx/${result.txHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {result.txHash.substring(0, 8)}...
-                    {result.txHash.substring(result.txHash.length - 8)}
-                    <span className="external-link">↗</span>
-                  </a>
-                </p>
-              )}
-            </div>
-          </div>
-        )}
+        <FaucetForm />
       </main>
       <footer className="App-footer">
         <p>

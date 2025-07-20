@@ -6,7 +6,7 @@ import TokenFaucet from "../abis/TokenFaucet.json";
 import "./FaucetForm.css";
 // require("dotenv").config();
 
-const FaucetForm = ({ setResult }) => {
+const FaucetForm = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [selectedChain, setSelectedChain] = useState("sepolia");
   const [isLoading, setIsLoading] = useState(false);
@@ -14,6 +14,12 @@ const FaucetForm = ({ setResult }) => {
   const [hasClaimed, setHasClaimed] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [result, setResult] = useState({
+    status: "",
+    message: "",
+    txHash: "",
+    tokenInfo: null,
+  });
 
   const validateAddress = (address) => {
     try {
@@ -486,6 +492,41 @@ const FaucetForm = ({ setResult }) => {
                 SUPPORTED_CHAINS[selectedChain]?.tokenSymbol || ""
               } Tokens`}
         </button>
+
+        {/* Transaction Result Message Box */}
+        {result.status && (
+          <div
+            className={`result-box ${
+              result.status === "success" ? "result-success" : "result-error"
+            }`}
+          >
+            <div className="result-icon">
+              {result.status === "success" ? "✅" : "❌"}
+            </div>
+            <div className="result-content">
+              <h3>
+                {result.status === "success"
+                  ? "Transaction Successful!"
+                  : "Transaction Failed"}
+              </h3>
+              <p>{result.message}</p>
+              {result.txHash && (
+                <p className="tx-hash">
+                  Transaction Hash:{" "}
+                  <a
+                    href={`${result.tokenInfo?.explorer}/tx/${result.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {result.txHash.substring(0, 8)}...
+                    {result.txHash.substring(result.txHash.length - 8)}
+                    <span className="external-link">↗</span>
+                  </a>
+                </p>
+              )}
+            </div>
+          </div>
+        )}
         {isConnected && (
           <div className="contract-balance-container">
             <h4>Faucet Balance</h4>
@@ -495,15 +536,6 @@ const FaucetForm = ({ setResult }) => {
                 {SUPPORTED_CHAINS[selectedChain]?.tokenSymbol}
               </span>
             </div>
-            {/* <div className="progress-container">
-              <div
-                className="progress-bar"
-                style={{ width: `${balancePercentage}%` }}
-              ></div>
-            </div>
-            <div className="balance-percentage">
-              {balancePercentage.toFixed(1)}% of capacity
-            </div> */}
           </div>
         )}
 
