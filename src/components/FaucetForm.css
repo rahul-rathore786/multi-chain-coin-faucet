@@ -1,0 +1,182 @@
+.faucet-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faucet-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #34495e;
+}
+
+.form-group input, 
+.form-group select {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  font-size: 16px;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.form-group input:focus, 
+.form-group select:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+.form-group input.error {
+  border-color: #e74c3c;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #2980b9;
+}
+
+button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.but.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #45a049;
+}
+
+.btn-primary:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.btn-connect {
+  background-color: #3498db;
+  color: white;
+  width: 100%;
+}
+
+.btn-connect:hover {
+  background-color: #2980b9;
+}
+
+.btn-disconnect {
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.btn-disconnect:hover {
+  background-color: #c0392b;
+}
+
+.wallet-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.wallet-address {
+  display: flex;
+  flex-direction: column;
+}
+
+.address-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.address-value {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+.network-info {
+  background-color: #ecf0f1;
+  padding: 15px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.token-info {
+  text-align: left;
+}
+
+.token-info h3 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+}
+
+.token-info p {
+  margin: 5px 0;
+}
+
+.claim-status {
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.already-claimed {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+}
+
+@media (max-width: 768px) {
+  .form-group input, 
+  .form-group select,
+  button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
