@@ -55,6 +55,6 @@ module.exports = {
   // source files and artifacts
   paths: {
     sources: "./contracts",
-    artifacts: "./artifacts-metis",
+    artifacts: "./artifacts-bnb",
   },
 };

@@ -32,7 +32,9 @@ export const SUPPORTED_CHAINS = {
   bnb_testnet: {
     name: "BSC Testnet",
     chainId: 97,
-    rpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    publicRpcUrl: "https://data-seed-prebsc-1-s1.binance.org:8545",
+    // use .env file to store the rpc url
+    rpcUrl: process.env.REACT_APP_BNB_TESTNET_RPC_URL, // This is a public key for testing
     faucetAddress: "0xYourBSCFaucetAddress", // Replace with actual faucet contract address
     tokenAddress: "0xYourBSCTokenAddress", // Replace with actual token address
     tokenSymbol: "bUSDT",
